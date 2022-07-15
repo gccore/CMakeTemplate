@@ -1,0 +1,56 @@
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+
+set(PROJECT_MAJOR_VERSION 1)
+set(PROJECT_MINOR_VERSION 0)
+set(PROJECT_PATCH_VERSION 0)
+
+set(CMAKE_MACOSX_RPATH 1)
+set(CMAKE_BUILD_RPATH "$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN")
+set(CMAKE_INSTALL_RPATH "$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN")
+
+cmake_policy(SET CMP0100 NEW) # For *.hh, MOC
+
+project(TemplateProject
+  LANGUAGES CXX 
+  VERSION 
+    ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_PATCH_VERSION}
+)
+add_library(${PROJECT_NAME}
+  SHARED
+    Main.cc
+)
+add_library(gccore::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+find_program(ccache_binary_path ccache REQUIRED)
+set_target_properties(${PROJECT_NAME}
+  PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED on
+    CXX_EXTENSIONS off
+    CXX_COMPILER_LAUNCHER ${ccache_binary_path}
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_MAJOR_VERSION}
+    AUTOMOC on
+    AUTOUIC on
+    AUTORCC on
+)
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+)
+target_include_directories(${PROJECT_NAME}
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)
+
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Config)
+install(
+  EXPORT ${PROJECT_NAME}Config 
+  NAMESPACE gccore::
+  DESTINATION lib/cmake/${PROJECT_NAME}
+)
+install(
+  FILES
+  TYPE INCLUDE
+)
+
