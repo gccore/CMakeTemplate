@@ -4,8 +4,6 @@ CMake Template
   Just a bunch of my frequently used CMake configurations.
 
   ./DeveloperTest: The developers test for the configurations.
-      /SharedLibraryWithVersion
+      /SharedLibrary
   ./Configs: Contains the configurations.
-      /SharedLibraryWithVersion: Contains the most common setup
-                                 for a strictly versioned shared library.
       /SharedLibrary: Contains the most common setup for a shared library.
