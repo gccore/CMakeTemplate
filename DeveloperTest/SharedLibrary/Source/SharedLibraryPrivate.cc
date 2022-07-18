@@ -8,7 +8,7 @@ namespace testing
 {
 SharedLibraryPrivate::SharedLibraryPrivate()
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  std::cout << SharedLibrary_VERSION << std::endl;
 }
 }  // namespace testing
 }  // namespace gccore

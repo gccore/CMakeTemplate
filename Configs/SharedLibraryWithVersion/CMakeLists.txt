@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 set(PROJECT_MAJOR_VERSION 1)
-set(PROJECT_MINOR_VERSION 0)
+set(PROJECT_MINOR_VERSION 1)
 set(PROJECT_PATCH_VERSION 0)
 
 project(SharedLibraryWithVersion
@@ -58,6 +58,10 @@ set_target_properties(${PROJECT_NAME}
     AUTOUIC on
     AUTORCC on
 )
+target_compile_definitions(${PROJECT_NAME}
+  PUBLIC
+    ${PROJECT_NAME}_VERSION="${PROJECT_VERSION}"
+)
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
 )
@@ -79,10 +83,10 @@ set(cmake_configs_dir lib/cmake/${project_with_version_name})
 
 install(
   TARGETS ${PROJECT_NAME}
-  EXPORT ${project_with_version_name}Config
+  EXPORT ${PROJECT_NAME}Config
 )
 install(
-  EXPORT ${project_with_version_name}Config
+  EXPORT ${PROJECT_NAME}Config
   NAMESPACE gccore::
   DESTINATION ${cmake_configs_dir}
 )
@@ -102,7 +106,7 @@ endif()
 include(CMakePackageConfigHelpers)
 
 set(project_config_version_path
-  ${PROJECT_BINARY_DIR}/${project_with_version_name}ConfigVersion.cmake)
+  ${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake)
 write_basic_package_version_file(
   ${project_config_version_path}
   VERSION ${PROJECT_VERSION}
