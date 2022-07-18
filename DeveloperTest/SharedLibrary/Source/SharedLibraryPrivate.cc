@@ -1,4 +1,4 @@
-#include <SharedLibraryPrivate.hh>
+#include <SharedLibrary/SharedLibraryPrivate.hh>
 
 #include <iostream>
 

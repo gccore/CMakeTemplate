@@ -1,6 +1,6 @@
 #include <SharedLibrary/SharedLibrary.hh>
 
-#include <SharedLibraryPrivate.hh>
+#include <SharedLibrary/SharedLibraryPrivate.hh>
 
 namespace gccore
 {

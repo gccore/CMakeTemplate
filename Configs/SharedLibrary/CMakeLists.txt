@@ -6,6 +6,7 @@ set(PROJECT_PATCH_VERSION 0)
 
 project(SharedLibrary
   LANGUAGES CXX
+  DESCRIPTION "Shared Library CMake Template"
   VERSION
     ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_PATCH_VERSION}
 )
@@ -23,7 +24,7 @@ set(private_headers_dir ${headers_dir}/Private)
 
 file(GLOB source_files Source/*.cc)
 file(GLOB public_header_files ${public_headers_dir}/${PROJECT_NAME}/*.hh)
-file(GLOB private_header_files ${private_headers_dir}/*.hh)
+file(GLOB private_header_files ${private_headers_dir}/${PROJECT_NAME}/*.hh)
 
 source_group("Source Files"
   FILES
