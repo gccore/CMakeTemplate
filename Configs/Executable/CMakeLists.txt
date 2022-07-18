@@ -4,8 +4,13 @@ set(PROJECT_MAJOR_VERSION 1)
 set(PROJECT_MINOR_VERSION 0)
 set(PROJECT_PATCH_VERSION 0)
 
-project(SharedLibrary
+set(CMAKE_MACOSX_RPATH 1)
+set(CMAKE_BUILD_RPATH "$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN")
+set(CMAKE_INSTALL_RPATH "$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN")
+
+project(Executable
   LANGUAGES CXX
+  DESCRIPTION "Executable CMake Template"
   VERSION
     ${PROJECT_MAJOR_VERSION}.${PROJECT_MINOR_VERSION}.${PROJECT_PATCH_VERSION}
 )
@@ -14,16 +19,13 @@ set(project_with_version_name ${PROJECT_NAME}-${PROJECT_VERSION})
 
 cmake_policy(SET CMP0100 NEW) # For *.hh, MOC
 
-option(option_install_private_headers
-  "Do you want to define an install role for the private headers?" on)
-
 set(headers_dir ${PROJECT_SOURCE_DIR}/Include)
 set(public_headers_dir ${headers_dir}/Public)
 set(private_headers_dir ${headers_dir}/Private)
 
 file(GLOB source_files Source/*.cc)
 file(GLOB public_header_files ${public_headers_dir}/${PROJECT_NAME}/*.hh)
-file(GLOB private_header_files ${private_headers_dir}/*.hh)
+file(GLOB private_header_files ${private_headers_dir}/${PROJECT_NAME}/*.hh)
 
 source_group("Source Files"
   FILES
@@ -38,13 +40,12 @@ source_group("Private Headers"
     ${private_header_files}
 )
 
-add_library(${PROJECT_NAME}
-  SHARED
+add_executable(${PROJECT_NAME}
     ${source_files}
     ${public_header_files}
     ${private_header_files}
 )
-add_library(gccore::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_executable(gccore::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 find_program(ccache_binary_path ccache REQUIRED)
 set_target_properties(${PROJECT_NAME}
@@ -53,7 +54,8 @@ set_target_properties(${PROJECT_NAME}
     CXX_STANDARD_REQUIRED on
     CXX_EXTENSIONS off
     CXX_COMPILER_LAUNCHER ${ccache_binary_path}
-    OUTPUT_NAME ${project_with_version_name}
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION}
     AUTOMOC on
     AUTOUIC on
     AUTORCC on
@@ -65,18 +67,10 @@ target_compile_definitions(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
 )
-
-set(headers_install_dir include/${project_with_version_name})
-set(public_headers_install_dir ${headers_install_dir}/Public)
-set(private_headers_install_dir ${headers_install_dir}/Private)
-
 target_include_directories(${PROJECT_NAME}
   PRIVATE
     $<BUILD_INTERFACE:${public_headers_dir}>
     $<BUILD_INTERFACE:${private_headers_dir}>
-  PUBLIC
-    $<INSTALL_INTERFACE:${public_headers_install_dir}>
-    $<INSTALL_INTERFACE:${private_headers_install_dir}>
 )
 
 set(cmake_configs_dir lib/cmake/${project_with_version_name})
@@ -90,18 +84,6 @@ install(
   NAMESPACE gccore::
   DESTINATION ${cmake_configs_dir}
 )
-install(
-  FILES
-    ${public_header_files}
-  DESTINATION ${public_headers_install_dir}/${PROJECT_NAME}
-)
-if(${option_install_private_headers})
-  install(
-    FILES
-      ${private_header_files}
-    DESTINATION ${private_headers_install_dir}/${PROJECT_NAME}
-  )
-endif()
 
 include(CMakePackageConfigHelpers)
 
