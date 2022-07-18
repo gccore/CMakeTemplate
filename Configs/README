@@ -1,0 +1,9 @@
+CMakeTemplate/Configs
+=====================
+
+  This directory contains all the configuration.
+  
+  - NOTE: Most of the configs are synced with 
+          ../DeveloperTest/[ConfigName], and if 
+          you modify them they may be overridden.
+  
