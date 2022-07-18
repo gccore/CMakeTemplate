@@ -7,3 +7,4 @@ CMake Template
   ./Configs: Contains the configurations.
       /SharedLibrary: Contains the most common setup for a shared library.
       /Executable: Contains the most common setup for a executable project.
+      /QtCreatorPlainCppCMake: QtCreator's Plain C++ project template.
