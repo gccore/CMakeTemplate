@@ -1,0 +1,12 @@
+CMakeTemplate/DeveloperTest
+===========================
+
+  This project is the tool that I use to develop the configs.
+  
+Adding New Config
+=================
+
+  Just create its directory and put the CMake config into it.
+  The root CMake will create an option for it and you could
+  enable it, after that every time when you run CMake it will
+  copy the config into ../Configs/[YourConfigDirectoryName]/
