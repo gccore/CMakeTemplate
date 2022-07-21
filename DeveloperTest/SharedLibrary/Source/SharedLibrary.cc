@@ -2,12 +2,9 @@
 
 #include <SharedLibrary/SharedLibraryPrivate.hh>
 
-namespace gccore
-{
-namespace testing
-{
-SharedLibrary::SharedLibrary() : impl_(new SharedLibraryPrivate)
-{}
+namespace gccore {
+namespace testing {
+SharedLibrary::SharedLibrary() : impl_(new SharedLibraryPrivate) {}
 SharedLibrary::~SharedLibrary() = default;
-}  // namespace testing
-}  // namespace gccore
+} // namespace testing
+} // namespace gccore

@@ -2,13 +2,10 @@
 
 #include <iostream>
 
-namespace gccore
-{
-namespace testing
-{
-SharedLibraryPrivate::SharedLibraryPrivate()
-{
+namespace gccore {
+namespace testing {
+SharedLibraryPrivate::SharedLibraryPrivate() {
   std::cout << SharedLibrary_VERSION << std::endl;
 }
-}  // namespace testing
-}  // namespace gccore
+} // namespace testing
+} // namespace gccore
