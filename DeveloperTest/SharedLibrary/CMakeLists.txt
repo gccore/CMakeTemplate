@@ -44,7 +44,8 @@ set_target_properties(${PROJECT_NAME}
     CXX_STANDARD_REQUIRED on
     CXX_EXTENSIONS off
     CXX_COMPILER_LAUNCHER ${ccache_binary_path}
-    OUTPUT_NAME ${project_with_version_name}
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_MAJOR_VERSION}
     AUTOMOC on
     AUTOUIC on
     AUTORCC on
@@ -83,6 +84,7 @@ set(cmake_configs_dir lib/cmake/${project_with_version_name})
 install(
   TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}Config
+  DESTINATION lib/${project_with_version_name}
 )
 install(
   EXPORT ${PROJECT_NAME}Config
