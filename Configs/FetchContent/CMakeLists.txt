@@ -35,6 +35,10 @@ include(FetchContent)
 #
 #  Including GTest
 #
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  set(INSTALL_GTEST off CACHE BOOL "" FORCE)
+  set(gtest_force_shared_crt on CACHE BOOL "" FORCE)
+endif ()
 FetchContent_Declare(
   GoogleTestContent
   GIT_REPOSITORY https://github.com/google/googletest.git
@@ -51,4 +55,8 @@ if(NOT googletestcontent_POPULATED)
 endif()
 
 add_executable(GoogleTest Source/GoogleTest.cc)
-target_link_libraries(GoogleTest PRIVATE GTest::gtest_main)
+target_link_libraries(GoogleTest
+  PRIVATE
+    GTest::gtest_main
+    GTest::gmock
+)
